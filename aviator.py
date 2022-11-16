@@ -1,5 +1,6 @@
 import numpy as np
 import skimage.morphology as morph
+import skimage.segmentation as segm
 import skimage.feature as feature
 import skimage.measure as measure
 from scipy import ndimage
@@ -53,7 +54,7 @@ def label_image_ws(im, include_edge_regions=True):
             ndimage.measurements.label(reg_max, 
                                        structure=morph.square(3))
         labels_lone_ws = \
-            morph.watershed(-dist, 
+            segm.watershed(-dist, 
                             markers=labelled_array_max, 
                             mask=im>0, connectivity=2, 
                             compactness=0.)
@@ -77,7 +78,7 @@ def label_image_ws(im, include_edge_regions=True):
                                    structure=[[0,0,0], 
                                               [0,1,0], 
                                               [0,0,0]])
-    labels_ws = morph.watershed(-dist, 
+    labels_ws = segm.watershed(-dist, 
                                 markers=labelled_array_max, 
                                 mask=im_new>0, connectivity=2, 
                                 compactness=0.)
